@@ -9,4 +9,10 @@
 
 .cell {
   font-size: 48px;
+  height: 120px;
+}
+
+.restart {
+  width: 180px;
+  height: 60px;
 }

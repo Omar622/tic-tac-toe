@@ -4,14 +4,14 @@ const GameBoard = (function (turn) {
 
   const restart = () => {
     currentTurn = 0;
-    for(let i = 0; i < 3; ++i){
-      for(let j = 0; j < 3; ++j){
+    for (let i = 0; i < 3; ++i) {
+      for (let j = 0; j < 3; ++j) {
         board[i][j] = -1;
       }
     }
   }
 
-  const getTurn = () => currentTurn; 
+  const getTurn = () => currentTurn;
 
   const play = (x, y) => {
     // invalid input
@@ -80,6 +80,7 @@ const GameBoard = (function (turn) {
   }
 
   return {
+    restart,
     getTurn,
     play,
     status
@@ -97,12 +98,12 @@ const renderGameBoard = () => {
           // actually need the last turn so that swapped it to be 'X' then 'O'.
           cell.innerHTML = (GameBoard.getTurn()) ? 'X' : 'O';
           const status = GameBoard.status();
-          if(status === 0){
-            // player 0 wins
-          }else if(status === 1){
-            // player 1 wins
-          }else if(status === 4){
-            // draw
+          if (status === 0) {
+            document.getElementById('status').innerHTML = 'Player 1 wins';
+          } else if (status === 1) {
+            document.getElementById('status').innerHTML = 'Player 2 wins';
+          } else if (status === 4) {
+            document.getElementById('status').innerHTML = 'Draw!';
           }
         }
       });
@@ -111,4 +112,17 @@ const renderGameBoard = () => {
   }
 }
 
+const renderRestartButton = () => {
+  const btn = document.getElementById('restart');
+  btn.addEventListener('click', () => {
+    document.getElementById('status').innerHTML = '';
+    const gameBoardDiv = document.getElementById('game-board');
+    for(let i = 0; i < gameBoardDiv.children.length; ++i){
+      gameBoardDiv.children[i].innerHTML = '';
+    } 
+    GameBoard.restart();
+  });
+}
+
 renderGameBoard();
+renderRestartButton();
