@@ -1,7 +1,9 @@
-const GameBoard = (function () {
-  board = [[-1, -1, -1], [-1, -1, -1], [-1, -1, -1]];
+const GameBoard = (function (turn) {
+  let board = [[-1, -1, -1], [-1, -1, -1], [-1, -1, -1]];
 
-  const play = (turn, x, y) => {
+  const getTurn = () => turn;
+
+  const play = (x, y) => {
     // invalid input
     if (Number.isInteger(turn) && turn <= 1 && turn >= 0) return false;
     if (Number.isInteger(x) && x <= 2 && x >= 0) return false;
@@ -10,6 +12,7 @@ const GameBoard = (function () {
     if (board[x][y] !== -1) return false;
     // play
     board[x][y] = turn;
+    turn = 1 - turn; // change turn
     return true;
   }
 
@@ -68,6 +71,7 @@ const GameBoard = (function () {
   }
 
   return {
+    getTurn,
     play,
     status
   }
@@ -75,8 +79,8 @@ const GameBoard = (function () {
 
 const renderGameBoard = () => {
   const gameBoardDiv = document.getElementById('game-board');
-  for(let i = 0; i < 3; ++i){
-    for(let j = 0; j < 3; ++j){
+  for (let i = 0; i < 3; ++i) {
+    for (let j = 0; j < 3; ++j) {
       const cell = document.createElement('button');
       cell.classList.add('cell');
       gameBoardDiv.appendChild(cell);
