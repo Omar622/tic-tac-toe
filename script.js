@@ -73,3 +73,15 @@ const GameBoard = (function () {
   }
 })();
 
+const renderGameBoard = () => {
+  const gameBoardDiv = document.getElementById('game-board');
+  for(let i = 0; i < 3; ++i){
+    for(let j = 0; j < 3; ++j){
+      const cell = document.createElement('button');
+      cell.classList.add('cell');
+      gameBoardDiv.appendChild(cell);
+    }
+  }
+}
+
+renderGameBoard();

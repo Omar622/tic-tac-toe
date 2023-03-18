@@ -1,0 +1,12 @@
+#game-board{
+  height: 360px;
+  width: 360px;
+  border: 1px solid black;
+  margin: auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.cell {
+  font-size: 48px;
+}
