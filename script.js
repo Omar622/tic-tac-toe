@@ -2,6 +2,15 @@ const GameBoard = (function (turn) {
   let board = [[-1, -1, -1], [-1, -1, -1], [-1, -1, -1]];
   let currentTurn = turn;
 
+  const restart = () => {
+    currentTurn = 0;
+    for(let i = 0; i < 3; ++i){
+      for(let j = 0; j < 3; ++j){
+        board[i][j] = -1;
+      }
+    }
+  }
+
   const getTurn = () => currentTurn; 
 
   const play = (x, y) => {
