@@ -1,18 +1,18 @@
 const GameBoard = (function (turn) {
   let board = [[-1, -1, -1], [-1, -1, -1], [-1, -1, -1]];
+  let currentTurn = turn;
 
-  const getTurn = () => turn;
+  const getTurn = () => currentTurn; 
 
   const play = (x, y) => {
     // invalid input
-    if (Number.isInteger(turn) && turn <= 1 && turn >= 0) return false;
-    if (Number.isInteger(x) && x <= 2 && x >= 0) return false;
-    if (Number.isInteger(y) && y <= 2 && y >= 0) return false;
+    if (!Number.isInteger(x) || x > 2 || x < 0) return false;
+    if (!Number.isInteger(y) || y > 2 || y < 0) return false;
     // can't play
-    if (board[x][y] !== -1) return false;
+    if (board[x][y] !== -1 || status() !== 3) return false;
     // play
-    board[x][y] = turn;
-    turn = 1 - turn; // change turn
+    board[x][y] = currentTurn;
+    currentTurn = 1 - currentTurn; // change turn
     return true;
   }
 
@@ -75,7 +75,7 @@ const GameBoard = (function (turn) {
     play,
     status
   }
-})();
+})(0);
 
 const renderGameBoard = () => {
   const gameBoardDiv = document.getElementById('game-board');
@@ -83,6 +83,20 @@ const renderGameBoard = () => {
     for (let j = 0; j < 3; ++j) {
       const cell = document.createElement('button');
       cell.classList.add('cell');
+      cell.addEventListener('click', () => {
+        if (GameBoard.play(i, j)) {
+          // actually need the last turn so that swapped it to be 'X' then 'O'.
+          cell.innerHTML = (GameBoard.getTurn()) ? 'X' : 'O';
+          const status = GameBoard.status();
+          if(status === 0){
+            // player 0 wins
+          }else if(status === 1){
+            // player 1 wins
+          }else if(status === 4){
+            // draw
+          }
+        }
+      });
       gameBoardDiv.appendChild(cell);
     }
   }
